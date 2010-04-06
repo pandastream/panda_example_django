@@ -16,4 +16,12 @@ setup(
     url = "http://github.com/newbamboo/panda_example_django",
     install_requires=install_requires,
     include_package_data=True,
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python",
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Topic :: Internet :: WWW/HTTP",
+    ],
+    license='MIT',
 )
