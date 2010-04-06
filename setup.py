@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-install_requires = ['panda>=1.0']
+install_requires = ['panda>=0.1.2']
 try:
     import json
 except ImportError:
@@ -8,7 +8,7 @@ except ImportError:
 
 setup(
     name = "panda_example_django",
-    version = "0.1.2",
+    version = "1.0",
     packages = find_packages(),
     author = "New Bamboo",
     author_email = "info@new-bamboo.co.uk",
