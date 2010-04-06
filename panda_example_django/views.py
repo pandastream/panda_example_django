@@ -1,3 +1,4 @@
+import os.path
 from django.shortcuts import render_to_response
 try:
     import json
@@ -6,6 +7,7 @@ except ImportError:
 from panda import Panda
 import settings
 from settings import PANDA_DETAILS as pd
+import config
 
 panda = Panda(api_host=pd['api_host'], cloud_id=pd['cloud_id'], secret_key=pd['secret_key'], access_key=pd['access_key'])
 
@@ -18,6 +20,12 @@ def index(request):
     })
 
 def player(request, panda_video_id):
+    if os.path.isfile(os.path.join(config.PANDA_EXAMPLE_DJANGO_PLAYER_DIR, 'player.swf')):
+        return _player(request, panda_video_id)
+    else:
+        return _player_missing(request)
+
+def _player(request, panda_video_id):
     video_id = panda_video_id or request.GET.get('panda_video_id')
     panda_encodings = json.loads(panda.get("/videos/%s/encodings.json" % video_id))
     panda_encoding = panda_encodings[0]
@@ -34,3 +42,6 @@ def player(request, panda_video_id):
         'panda_encodings_repr': repr(panda_encodings).replace(',', ',\n').replace('{', '\n{'),
         'encoding': encoding,
     })
+
+def _player_missing(request):
+    return render_to_response('panda_example_django/player_missing.html')
