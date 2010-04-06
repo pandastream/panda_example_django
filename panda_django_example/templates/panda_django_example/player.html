@@ -1,0 +1,28 @@
+{% extends 'panda_django_example/layout.html' %}
+
+{% block content %}
+
+{% if encoding %}
+<h1>Your video, encoded with Panda</h1>
+<div id="flash_container_{{ encoding.id }}"><a href="http://www.macromedia.com/go/getflashplayer">Get the latest Flash Player</a> to watch this video.</div>
+<script type="text/javascript">
+  var flashvars = {};
+
+  flashvars.file = "{{ encoding.url }}";
+  flashvars.width = "{{ encoding.width }}";
+  flashvars.height = "{{ encoding.height }}";
+  flashvars.fullscreen = "true";
+  flashvars.controlbar = "over";
+  var params = {wmode:"transparent",allowfullscreen:"true"};
+  var attributes = {};
+  attributes.align = "top";
+  swfobject.embedSWF("/player.swf", "flash_container_{{ encoding.id }}", "{{ encoding.width }}", "{{ encoding.height }}", "9.0.115", "/flash/expressInstall.swf", flashvars, params, attributes);
+</script>
+<p><a href="{% url panda_django_example.index %}">Try with a different video</a></p>
+{% else %}
+<p>Your video has not been encoded yet. Please wait a few moments and <a href="{% url panda_django_example.player panda_video_id %}">refresh this page</a>.</p>
+{% endif %}
+<h2>Encoding details</h2>
+<pre>{{ panda_encodings_repr }}</pre>
+
+{% endblock %}
