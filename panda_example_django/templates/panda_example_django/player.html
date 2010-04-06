@@ -1,4 +1,4 @@
-{% extends 'panda_django_example/layout.html' %}
+{% extends 'panda_example_django/layout.html' %}
 
 {% block content %}
 
@@ -18,9 +18,9 @@
   attributes.align = "top";
   swfobject.embedSWF("/player.swf", "flash_container_{{ encoding.id }}", "{{ encoding.width }}", "{{ encoding.height }}", "9.0.115", "/flash/expressInstall.swf", flashvars, params, attributes);
 </script>
-<p><a href="{% url panda_django_example.index %}">Try with a different video</a></p>
+<p><a href="{% url panda_example_django.index %}">Try with a different video</a></p>
 {% else %}
-<p>Your video has not been encoded yet. Please wait a few moments and <a href="{% url panda_django_example.player panda_video_id %}">refresh this page</a>.</p>
+<p>Your video has not been encoded yet. Please wait a few moments and <a href="{% url panda_example_django.player panda_video_id %}">refresh this page</a>.</p>
 {% endif %}
 <h2>Encoding details</h2>
 <pre>{{ panda_encodings_repr }}</pre>

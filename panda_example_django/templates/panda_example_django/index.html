@@ -1,8 +1,8 @@
-{% extends 'panda_django_example/layout.html' %}
+{% extends 'panda_example_django/layout.html' %}
 
 {% block content %}
 <p>This is an example <strong>Panda</strong> client application, written in <strong>Python</strong>, using the <strong>Django</strong> framework.</p>
-<form action="{% url panda_django_example.player %}" method="get" id="upload-form">
+<form action="{% url panda_example_django.player %}" method="get" id="upload-form">
     <label>Upload a video<br/></label>
     
     <span id="upload_button"></span>
