@@ -24,4 +24,5 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
     ],
     license='MIT',
+    keywords='panda video encoding stream service example',
 )
