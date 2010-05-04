@@ -28,15 +28,15 @@ def player(request, panda_video_id):
 def _player(request, panda_video_id):
     video_id = panda_video_id or request.GET.get('panda_video_id')
     panda_encodings = json.loads(panda.get("/videos/%s/encodings.json" % video_id))
-    panda_encoding = panda_encodings[0]
     encoding = None;
-    if panda_encoding['status'] == 'success':
-        encoding = {
-            'id'     : panda_encoding['id'],
-            'url'    : "http://%s.s3.amazonaws.com/%s%s" % (settings.PANDA_S3_BUCKET, panda_encoding['id'], panda_encoding['extname']),
-            'width'  : panda_encoding['width'],
-            'height' : panda_encoding['height'],
-        }
+    for panda_encoding in panda_encodings:
+        if panda_encoding['extname'] == '.mp4' and panda_encoding['status'] == 'success':
+            encoding = {
+                'id'     : panda_encoding['id'],
+                'url'    : "http://%s.s3.amazonaws.com/%s%s" % (settings.PANDA_S3_BUCKET, panda_encoding['id'], panda_encoding['extname']),
+                'width'  : panda_encoding['width'],
+                'height' : panda_encoding['height'],
+            }
     return render_to_response('panda_example_django/player.html', {
         'panda_video_id': video_id,
         'panda_encodings_repr': repr(panda_encodings).replace(',', ',\n').replace('{', '\n{'),
