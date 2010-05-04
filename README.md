@@ -12,6 +12,8 @@ Also available:
 Setup
 -----
 
+By default, Panda will encode your videos using the H.264 codec, playable with the HTML5 &lt;VIDEO&gt; tag. This example will use this to play your videos. Make sure you use a compatible browser to watch it.
+
 This application has been tested successfully with **Python 2.5 and 2.6**. Make sure of the following:
 
 ### 0. Create a Django project
@@ -57,19 +59,6 @@ Let Django know where the app is located using urls.py. A simple example would b
         (r'', include('panda_example_django.urls')), # This is the important line
     )
 
-### 4. The video player
-
-This package does not include a video player. The one that this application uses is [JW Player](http://www.longtailvideo.com/players/jw-flv-player/) by Longtail. However, it has a restrictive license that does not allow us to distribute it along with the rest of the files.
-
-Instead, you need to go to their website at http://www.longtailvideo.com, download the player, and copy the **player.swf** somewhere in your computer.
-
-One this is done, edit `settings.py` so that the `PANDA_EXAMPLE_DJANGO_PLAYER_DIR` points to the **directory** (not the file) where the file `player.swf` is.
-
-For example, if you just drop the file player.swf in the same directory where `settings.py` resides, you can simply do:
-
-    PANDA_EXAMPLE_DJANGO_PLAYER_DIR = os.path.dirname(__file__)
-
-
 And that should be all.
 
 
@@ -78,7 +67,7 @@ What does this do anyway?
 
 The application will initially show a simple form where you can specify a video file to upload from your computer. Once uploaded, it will ask you to wait a bit until all is encoded. You'll have to reload the page yourself until this is done.
 
-Finally, the video will appear embedded on the page, using a Flash player. If you wish to try again with another video, a link is provided to restart the process.
+Finally, the video will appear embedded on the page. If you wish to try again with another video, a link is provided to restart the process.
 
 
 Notes

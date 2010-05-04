@@ -20,12 +20,6 @@ def index(request):
     })
 
 def player(request, panda_video_id):
-    if os.path.isfile(os.path.join(config.PANDA_EXAMPLE_DJANGO_PLAYER_DIR, 'player.swf')):
-        return _player(request, panda_video_id)
-    else:
-        return _player_missing(request)
-
-def _player(request, panda_video_id):
     video_id = panda_video_id or request.GET.get('panda_video_id')
     panda_encodings = json.loads(panda.get("/videos/%s/encodings.json" % video_id))
     encoding = None;
@@ -42,6 +36,3 @@ def _player(request, panda_video_id):
         'panda_encodings_repr': repr(panda_encodings).replace(',', ',\n').replace('{', '\n{'),
         'encoding': encoding,
     })
-
-def _player_missing(request):
-    return render_to_response('panda_example_django/player_missing.html')
