@@ -1,7 +1,7 @@
 Panda example application, Django
 =================================
 
-An example Django web app that uses [**Panda**](http://beta.pandastream.com) to encode videos and play them on a page.
+An example Django web app that uses [**Panda**](http://www.pandastream.com) to encode videos and play them on a page.
 
 Setup
 -----
