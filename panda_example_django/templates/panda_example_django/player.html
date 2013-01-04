@@ -1,8 +1,16 @@
 {% extends 'panda_example_django/layout.html' %}
 
+{% block navbar %}
+  <li><a href="/">Upload</a></li>
+  <li  class="active"><a href="#">Player</a></li>
+  
+{% endblock %}
+
+
 {% block content %}
 
-{% if encoding %}
+{% if encoding.status == 'success' %}
+
 <h1>Your video, encoded with Panda</h1>
 <div>
     <h2>Using HTML5</h2>
@@ -10,11 +18,29 @@
       <source src="{{ encoding.url }}" type="video/mp4">
     </video>
 </div>
+
+<h3>Thumbnails</h3>
+
+<ul class="thumbnails">
+{% for thumb in encoding.thumbnails %}
+  <li class="span1">
+    <a class="thumbnail" href="#">
+      <img src="{{ thumb }}"
+           style="width: {{ encoding.width }}; height: {{ encoding.height }} %>">
+    </a>
+  </li>
+{% endfor %}
+</ul>
+
 <p><a href="{% url panda_example_django.index %}">Try with a different video</a></p>
 {% else %}
+
+<div class='progress progress-striped progress-success'>
+  <span id="progress-bar" class='bar' style="width: {{ encoding.encoding_progress }}%">{{encoding.encoding_progress}} %</span>
+</div>
+
 <p>Your video has not been encoded yet. Please wait a few moments and <a href="{% url panda_example_django.player panda_video_id %}">refresh this page</a>.</p>
 {% endif %}
 <h2>Encoding details</h2>
-<pre>{{ panda_encodings_repr }}</pre>
-
+<pre>{{ panda_encodings_repr|escape }}</pre>
 {% endblock %}

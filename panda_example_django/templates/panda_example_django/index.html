@@ -1,23 +1,60 @@
 {% extends 'panda_example_django/layout.html' %}
 
+{% block navbar %}
+  <li class="active"><a href="/">Upload</a></li>
+{% endblock %}
+
 {% block content %}
 <p>This is an example <strong>Panda</strong> client application, written in <strong>Python</strong>, using the <strong>Django</strong> framework.</p>
-<form action="{% url panda_example_django.player %}" method="get" id="upload-form">
-    <label>Upload a video<br/></label>
-    
-    <span id="upload_button"></span>
-    <input type="text" id="upload_filename" disabled="true" class="panda_upload_filename" />
-    <div id="upload_progress" class="panda_upload_progress"></div>
-    <input type="hidden" id="returned_video_id" name="panda_video_id" />
 
-    <p><input type="submit" value="Save" /></p>
+<div class='span4'>
+
+<form action="{% url panda_example_django.player %}" method="get" id="new_video">
+
+  <input type="hidden" name="panda_video_id"/>
+
+  <div class='progress progress-striped progress-success active'>
+    <span id="progress-bar" class='bar'></span>
+  </div>
+
+  <div class='btn-toolbar'>
+    <div id='browse-files' class='btn btn-primary btn-success'><span>Choose file</span></div>
+    <button id='cancel-button' class='btn btn-danger'>Cancel</button>
+  </div>
+
 </form>
+
+</div>
+
 <script type="text/javascript">
-$('#returned_video_id').pandaUploader({{ panda_access_details|safe }}, {
-    upload_button_id: 'upload_button',
-    upload_filename_id: 'upload_filename',
-    upload_progress_id: 'upload_progress',
-    api_host: '{{ panda_api_host }}'
-});
+    
+    $('#cancel-button').click(function(e){
+      upl.cancel(upl.getQueuedFiles()[0]);
+      e.preventDefault();
+    })
+
+    var upl = panda.uploader.init({
+      'buttonId': 'browse-files',
+      'progressBarId': 'progress-bar',
+      'onProgress': function(file, percent) {
+        console.log("progress", percent, "%")
+      },
+      'onSuccess': function(file, data) {
+        $("#new_video")
+          .find("[name=panda_video_id]")
+            .val(data.id)
+          .end()
+          .submit();
+      },
+
+      'onCancel': function(file, data) {
+        upl.setProgress(0);
+      },
+
+      'onError': function(file, message) {
+        console.log("error", message)
+      }
+    });
 </script>
+
 {% endblock %}

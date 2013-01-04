@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-install_requires = ['panda>=0.1.2']
+install_requires = ['panda>=0.1.4', 'django']
 try:
     import json
 except ImportError:
